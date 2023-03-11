@@ -1,8 +1,6 @@
-import { FC, useCallback } from 'react'
+import { FC, createRef, RefObject, useEffect, useState } from 'react'
 import { AppContainer } from './App.styled'
 import { AppProps } from './types'
-
-import { createRef, RefObject, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import styledContainerQuery from 'styled-container-query'
 
@@ -48,7 +46,9 @@ export const useRefDimensions: useRefDimensionsProps = (ref, initRef = { width: 
         if (!entries.length) return
 
         const entry = entries[0]
-        setDimensions(entry.contentRect)
+        if (JSON.stringify(dimensions) !== JSON.stringify(entry.contentRect)) {
+          setDimensions(entry.contentRect)
+        }
       })
       resizeObserver.observe(current)
 
